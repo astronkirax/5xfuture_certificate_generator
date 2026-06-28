@@ -1,19 +1,19 @@
 name: Build and Deploy
 
-# Builds the static site and deploys the contents of dist/ to the VPS over SSH.
-# Required repository secrets (Settings → Secrets and variables → Actions):
-#   VPS_HOST    - server IP / hostname (e.g. 72.61.245.209)
-#   VPS_USER    - SSH user (e.g. root)
-#   VPS_SSH_KEY - private SSH deploy key (PEM) whose public key is in the server's authorized_keys
-#   VPS_TARGET  - absolute deploy directory on the server (e.g. /var/www/5xfuture-certgen)
+# The VPS host drops inbound SSH from cloud/CI IP ranges, so we use a PULL-based
+# deploy: this workflow builds the site and publishes dist/ to the `deploy` branch.
+# A cron job on the server pulls that branch into the web root (see DEPLOYMENT.md).
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build-deploy:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,24 +31,13 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy dist/ to VPS
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          source: "dist/."
-          target: ${{ secrets.VPS_TARGET }}
-          strip_components: 1
-          overwrite: true
-
-      - name: Fix ownership & permissions
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            chown -R www-data:www-data "${{ secrets.VPS_TARGET }}"
-            find "${{ secrets.VPS_TARGET }}" -type d -exec chmod 755 {} \;
-            find "${{ secrets.VPS_TARGET }}" -type f -exec chmod 644 {} \;
+      - name: Publish built site to deploy branch
+        run: |
+          cd dist
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy ${GITHUB_SHA}"
+          git branch -M deploy
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" deploy

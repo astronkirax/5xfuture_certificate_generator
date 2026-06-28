@@ -1,21 +1,22 @@
-import html2canvas from 'html2canvas'
+import { toCanvas } from 'html-to-image'
 import { jsPDF } from 'jspdf'
 import { ensureFonts } from './fonts.js'
 
 // A4 dimensions in mm
 const A4 = { w: 210, h: 297 }
 
-async function captureNode(node, scale) {
-  return html2canvas(node, {
-    scale,
+// We render via html-to-image (native SVG <foreignObject>) so the BROWSER does the
+// text layout and gradient painting. This avoids html2canvas's word-spacing collapse
+// and its gradient `createPattern` crash on mobile (high-DPR) devices.
+async function captureNode(node, pixelRatio) {
+  return toCanvas(node, {
+    pixelRatio,
     backgroundColor: '#ffffff',
-    useCORS: true,
-    logging: false,
-    // Render at the element's true layout size (the .sheet/.certificate is mm-sized)
+    cacheBust: true,
     width: node.offsetWidth,
     height: node.offsetHeight,
-    windowWidth: node.offsetWidth,
-    windowHeight: node.offsetHeight,
+    // Neutralise any inherited preview scaling on the captured node itself.
+    style: { transform: 'none', transformOrigin: 'top left', margin: '0', boxShadow: 'none' },
   })
 }
 
@@ -37,10 +38,11 @@ export async function downloadPdf(pages, opts = {}) {
   const pageH = orientation === 'landscape' ? A4.w : A4.h
 
   for (let i = 0; i < pages.length; i++) {
-    const canvas = await captureNode(pages[i], scale)
-    const img = canvas.toDataURL('image/jpeg', 0.96)
+    // Two passes can help Safari/Chrome cache embedded fonts/images on first paint.
+    let canvas = await captureNode(pages[i], scale)
+    canvas = await captureNode(pages[i], scale)
+    const img = canvas.toDataURL('image/jpeg', 0.95)
     if (i > 0) pdf.addPage('a4', orientation)
-    // Fill the whole A4 page; the source nodes are already exact A4 aspect ratio.
     pdf.addImage(img, 'JPEG', 0, 0, pageW, pageH, undefined, 'FAST')
   }
 

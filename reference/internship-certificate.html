@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>5XFUTURE — Internship Certificate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Playfair+Display:wght@600;700;800;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #3A266D;       /* brand primary  */
+    --purple-deep: #2A1B52;
+    --purple-soft: #4A3488;
+    --orange: #F58220;       /* brand accent   */
+    --orange-deep: #D96E12;
+    --orange-light: #F9A35A;
+    --cream: #FBF8F2;
+    --ink: #2B2347;
+    --muted: #6E6688;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #eceaf2;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ===== Landscape A4 canvas ===== */
+  .certificate {
+    position: relative;
+    width: 297mm;
+    height: 210mm;
+    margin: 24px auto;
+    background:
+      radial-gradient(circle at 50% -10%, #ffffff 0%, var(--cream) 60%, #f3eee4 100%);
+    box-shadow: 0 18px 60px rgba(58, 38, 109, 0.30);
+    overflow: hidden;
+  }
+
+  /* Decorative outer frame */
+  .frame-outer {
+    position: absolute;
+    inset: 9mm;
+    border: 2.5px solid var(--purple);
+  }
+  .frame-inner {
+    position: absolute;
+    inset: 12mm;
+    border: 1px solid var(--orange);
+    box-shadow: inset 0 0 0 4px rgba(245, 130, 32, 0.10);
+  }
+
+  /* Faint watermark */
+  .watermark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .watermark span {
+    font-family: 'Cinzel', serif;
+    font-size: 230px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: rgba(58, 38, 109, 0.045);
+    transform: rotate(-8deg);
+    user-select: none;
+  }
+
+  /* Corner ornaments */
+  .corner {
+    position: absolute;
+    width: 30mm;
+    height: 30mm;
+    border: 0 solid var(--orange);
+    z-index: 3;
+  }
+  .corner::after {
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: var(--orange);
+    transform: rotate(45deg);
+  }
+  .corner.tl { top: 12mm; left: 12mm; border-top-width: 3px; border-left-width: 3px; }
+  .corner.tr { top: 12mm; right: 12mm; border-top-width: 3px; border-right-width: 3px; }
+  .corner.bl { bottom: 12mm; left: 12mm; border-bottom-width: 3px; border-left-width: 3px; }
+  .corner.br { bottom: 12mm; right: 12mm; border-bottom-width: 3px; border-right-width: 3px; }
+  .corner.tl::after { top: -4px; left: -4px; }
+  .corner.tr::after { top: -4px; right: -4px; }
+  .corner.bl::after { bottom: -4px; left: -4px; }
+  .corner.br::after { bottom: -4px; right: -4px; }
+
+  /* ===== Content ===== */
+  .content {
+    position: absolute;
+    inset: 15mm 20mm;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Header / brand logo */
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .brand img {
+    height: 70px;
+    width: auto;
+    display: block;
+  }
+  .brand-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .rule {
+    width: 130px;
+    height: 2px;
+    margin: 12px 0 2px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    position: relative;
+  }
+  .rule::after {
+    content: "✦";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--orange-deep);
+    font-size: 12px;
+    background: var(--cream);
+    padding: 0 8px;
+  }
+
+  /* Title */
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-top: 6px;
+    line-height: 1.05;
+  }
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+    margin-top: 4px;
+  }
+
+  .presented {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--muted);
+    margin-top: 14px;
+  }
+
+  /* Recipient name placeholder */
+  .name-line {
+    margin-top: 4px;
+    min-width: 70%;
+    border-bottom: 1.5px solid var(--purple);
+    padding: 0 30px 4px;
+    height: 44px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .name-line .placeholder {
+    font-family: 'Playfair Display', serif;
+    font-size: 29px;
+    font-weight: 700;
+    color: #c3bdd2;
+    letter-spacing: 1px;
+  }
+  .field-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+
+  /* Body statement */
+  .body-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    max-width: 90%;
+    margin-top: 14px;
+  }
+  .body-text strong { color: var(--purple); }
+  .fill {
+    display: inline-block;
+    min-width: 230px;
+    border-bottom: 1.4px solid var(--purple);
+    margin: 0 6px;
+    text-align: center;
+    color: #c3bdd2;
+    font-weight: 600;
+    font-style: italic;
+    padding-bottom: 1px;
+  }
+  .fill.sm { min-width: 150px; }
+
+  /* Footer row: signatures + seal */
+  .footer {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .sign {
+    width: 33%;
+    text-align: center;
+  }
+  .sign .ink-line {
+    height: 38px;
+    border-bottom: 1.4px solid var(--purple);
+    margin: 0 8px 6px;
+  }
+  .sign .role {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--purple);
+  }
+  .sign .org {
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  /* Director's signature resting on the signature line */
+  .sign.sign-director { position: relative; }
+  .sign .sig-on-line {
+    display: block;
+    height: 58px;
+    width: auto;
+    margin: 0 auto -10px;
+    pointer-events: none;
+  }
+
+  /* Seal / medallion */
+  .seal {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .medallion {
+    position: relative;
+    width: 94px;
+    height: 94px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--orange-light), var(--orange) 55%, var(--orange-deep) 100%);
+    box-shadow: 0 6px 16px rgba(217,110,18,0.40), inset 0 0 0 3px rgba(255,255,255,0.40), inset 0 0 0 6px var(--orange-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+  }
+  .medallion::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px dashed rgba(217,110,18,0.55);
+  }
+  .medallion .seal-inner {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1.25;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.18);
+  }
+  .medallion .seal-inner .x5 { font-size: 18px; display: block; }
+  /* Ribbon */
+  .ribbon {
+    display: flex;
+    gap: 4px;
+    margin-top: -2px;
+  }
+  .ribbon span {
+    width: 12px;
+    height: 24px;
+    background: linear-gradient(var(--purple), var(--purple-soft));
+  }
+  .ribbon span:first-child { transform: skewY(8deg); }
+  .ribbon span:last-child { transform: skewY(-8deg); }
+
+  /* Meta strip */
+  .meta {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .meta .fill { min-width: 130px; font-size: 12px; }
+
+  /* Legal footer */
+  .legal {
+    margin-top: 9px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .legal b { color: var(--purple); }
+
+  /* ===== Print ===== */
+  @page { size: A4 landscape; margin: 0; }
+  @media print {
+    html, body { background: #fff; }
+    .certificate { margin: 0; box-shadow: none; page-break-after: always; }
+    .toolbar { display: none !important; }
+  }
+
+  /* Screen helper toolbar */
+  .toolbar {
+    max-width: 297mm;
+    margin: 20px auto 0;
+    text-align: center;
+  }
+  .toolbar button {
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--purple);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .toolbar button:hover { background: var(--purple-soft); }
+  .toolbar p { margin-top: 8px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <button onclick="window.print()">🖨  Print / Save as PDF (Landscape)</button>
+    <p>Fill the underlined blanks with the student's name, course, and dates — then print or save as PDF.</p>
+  </div>
+
+  <div class="certificate">
+    <div class="frame-outer"></div>
+    <div class="frame-inner"></div>
+    <div class="watermark"><span>5X</span></div>
+
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <div class="content">
+
+      <!-- Brand header (logo) -->
+      <div class="brand">
+        <img src="logo.png" alt="5XFUTURE — Learn Today. Lead Tomorrow." />
+        <div class="brand-sub">Software Training Institute &nbsp;•&nbsp; Kakinada</div>
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- Title -->
+      <div class="title">Certificate of Internship</div>
+      <div class="subtitle">Of Successful Completion</div>
+
+      <!-- Recipient -->
+      <div class="presented">This certificate is proudly presented to</div>
+      <div class="name-line">
+        <span class="placeholder">&nbsp;</span>
+      </div>
+      <div class="field-label">Name of the Intern</div>
+
+      <!-- Statement -->
+      <div class="body-text">
+        for successfully completing the internship programme in
+        <span class="fill">&nbsp;</span>
+        at <strong>5XFUTURE Software Training Institute, Kakinada</strong>, from
+        <span class="fill sm">&nbsp;</span> to <span class="fill sm">&nbsp;</span>.
+        During the internship, the intern worked on real‑time projects and
+        demonstrated exemplary technical skill, discipline, and professionalism.
+        We commend this achievement and wish the intern continued success ahead.
+      </div>
+
+      <!-- Footer: signatures + seal -->
+      <div class="footer">
+        <div class="sign">
+          <div class="ink-line"></div>
+          <div class="role">Training Head</div>
+          <div class="org">5XFUTURE, Kakinada</div>
+        </div>
+
+        <div class="seal">
+          <div class="medallion">
+            <div class="seal-inner"><span class="x5">5X</span>FUTURE<br/>CERTIFIED</div>
+          </div>
+          <div class="ribbon"><span></span><span></span></div>
+        </div>
+
+        <div class="sign sign-director">
+          <img class="sig-on-line" src="signature-mark.png" alt="Dr. Sai Kumar — Director" />
+          <div class="ink-line"></div>
+          <div class="org">Mahasana IT Solutions Pvt. Ltd.</div>
+        </div>
+      </div>
+
+      <!-- Meta strip -->
+      <div class="meta">
+        <div>Certificate No. : <span class="fill">&nbsp;</span></div>
+        <div>Date of Issue : <span class="fill">&nbsp;</span></div>
+      </div>
+
+      <!-- Legal footer -->
+      <div class="legal">
+        5XFUTURE is a brand of <b>Mahasana IT Solutions Private Limited</b> (CIN: U62010AP2023PTC113188)
+        &nbsp;|&nbsp; contact@5xfuture.in &nbsp;|&nbsp; +91 96401 31555 &nbsp;|&nbsp; 5xfuture.in
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+/* ===========================================================================
+   Document styles — ported verbatim from the reference 5XFUTURE templates
+   (reference/internship-certificate.html and reference/offer-letter.html).
+   All colours use CSS variables set on :root by ConfigContext, so the
+   Template Editor can recolour both the live preview and the generated PDF.
+   =========================================================================== */
+
+:root {
+  --purple: #3a266d;
+  --purple-deep: #2a1b52;
+  --purple-soft: #4a3488;
+  --orange: #f58220;
+  --orange-deep: #d96e12;
+  --orange-light: #f9a35a;
+  --cream: #fbf8f2;
+  --ink: #2b2347;
+  --muted: #6e6688;
+  --placeholder: #c3bdd2;
+}
+
+/* ====================== CERTIFICATE (landscape A4) ====================== */
+.certificate {
+  position: relative;
+  width: 297mm;
+  height: 210mm;
+  background: radial-gradient(circle at 50% -10%, #ffffff 0%, var(--cream) 60%, #f3eee4 100%);
+  overflow: hidden;
+  font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  color: var(--ink);
+}
+.certificate .frame-outer { position: absolute; inset: 9mm; border: 2.5px solid var(--purple); }
+.certificate .frame-inner {
+  position: absolute; inset: 12mm; border: 1px solid var(--orange);
+  box-shadow: inset 0 0 0 4px rgba(245, 130, 32, 0.1);
+}
+.certificate .watermark {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;
+}
+.certificate .watermark span {
+  font-family: 'Cinzel', serif; font-size: 230px; font-weight: 700; letter-spacing: 6px;
+  color: rgba(58, 38, 109, 0.045); transform: rotate(-8deg); user-select: none;
+}
+.certificate .corner { position: absolute; width: 30mm; height: 30mm; border: 0 solid var(--orange); z-index: 3; }
+.certificate .corner::after { content: ''; position: absolute; width: 7px; height: 7px; background: var(--orange); transform: rotate(45deg); }
+.certificate .corner.tl { top: 12mm; left: 12mm; border-top-width: 3px; border-left-width: 3px; }
+.certificate .corner.tr { top: 12mm; right: 12mm; border-top-width: 3px; border-right-width: 3px; }
+.certificate .corner.bl { bottom: 12mm; left: 12mm; border-bottom-width: 3px; border-left-width: 3px; }
+.certificate .corner.br { bottom: 12mm; right: 12mm; border-bottom-width: 3px; border-right-width: 3px; }
+.certificate .corner.tl::after { top: -4px; left: -4px; }
+.certificate .corner.tr::after { top: -4px; right: -4px; }
+.certificate .corner.bl::after { bottom: -4px; left: -4px; }
+.certificate .corner.br::after { bottom: -4px; right: -4px; }
+.certificate .content {
+  position: absolute; inset: 15mm 20mm; z-index: 4; display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+}
+.certificate .brand { display: flex; flex-direction: column; align-items: center; }
+.certificate .brand img { height: 70px; width: auto; display: block; }
+.certificate .brand-sub {
+  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 600; letter-spacing: 4.5px;
+  text-transform: uppercase; color: var(--muted); margin-top: 8px;
+}
+.certificate .rule {
+  width: 130px; height: 2px; margin: 12px 0 2px;
+  background: linear-gradient(90deg, transparent, var(--orange), transparent); position: relative;
+}
+.certificate .rule::after {
+  content: '✦'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  color: var(--orange-deep); font-size: 12px; background: var(--cream); padding: 0 8px;
+}
+.certificate .title {
+  font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 800; letter-spacing: 7px;
+  text-transform: uppercase; color: var(--purple); margin-top: 6px; line-height: 1.05;
+}
+.certificate .subtitle {
+  font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; letter-spacing: 6px;
+  text-transform: uppercase; color: var(--orange-deep); margin-top: 4px;
+}
+.certificate .presented { font-style: italic; font-size: 16px; color: var(--muted); margin-top: 14px; }
+.certificate .name-line {
+  margin-top: 4px; min-width: 70%; border-bottom: 1.5px solid var(--purple); padding: 0 30px 4px;
+  height: 44px; display: flex; align-items: flex-end; justify-content: center;
+}
+.certificate .name-line .value {
+  font-family: 'Playfair Display', serif; font-size: 29px; font-weight: 700; color: var(--purple); letter-spacing: 1px;
+}
+.certificate .field-label {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 5px;
+}
+.certificate .body-text { font-size: 16px; line-height: 1.7; color: var(--ink); max-width: 90%; margin-top: 14px; }
+.certificate .body-text strong { color: var(--purple); }
+.certificate .fillv {
+  display: inline-block; min-width: 180px; border-bottom: 1.4px solid var(--purple); margin: 0 6px;
+  text-align: center; color: var(--purple); font-weight: 600; padding-bottom: 1px;
+}
+.certificate .fillv.sm { min-width: 120px; }
+.certificate .footer { margin-top: auto; width: 100%; display: flex; align-items: flex-end; justify-content: space-between; }
+.certificate .sign { width: 33%; text-align: center; }
+.certificate .sign .ink-line { height: 38px; border-bottom: 1.4px solid var(--purple); margin: 0 8px 6px; }
+.certificate .sign .role {
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 14px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--purple);
+}
+.certificate .sign .org { font-size: 11.5px; color: var(--muted); letter-spacing: 0.5px; }
+.certificate .sign.sign-director { position: relative; }
+.certificate .sign .sig-on-line { display: block; height: 58px; width: auto; margin: 0 auto -10px; pointer-events: none; }
+.certificate .seal { width: 33%; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.certificate .medallion {
+  position: relative; width: 94px; height: 94px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--orange-light), var(--orange) 55%, var(--orange-deep) 100%);
+  box-shadow: 0 6px 16px rgba(217, 110, 18, 0.4), inset 0 0 0 3px rgba(255, 255, 255, 0.4), inset 0 0 0 6px var(--orange-deep);
+  display: flex; align-items: center; justify-content: center; color: #fff; text-align: center;
+}
+.certificate .medallion::before {
+  content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 2px dashed rgba(217, 110, 18, 0.55);
+}
+.certificate .medallion .seal-inner {
+  font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; line-height: 1.25;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.18);
+}
+.certificate .medallion .seal-inner .x5 { font-size: 18px; display: block; }
+.certificate .ribbon { display: flex; gap: 4px; margin-top: -2px; }
+.certificate .ribbon span { width: 12px; height: 24px; background: linear-gradient(var(--purple), var(--purple-soft)); }
+.certificate .ribbon span:first-child { transform: skewY(8deg); }
+.certificate .ribbon span:last-child { transform: skewY(-8deg); }
+.certificate .meta {
+  width: 100%; display: flex; justify-content: space-between; margin-top: 12px; font-size: 12px;
+  color: var(--muted); letter-spacing: 0.5px;
+}
+.certificate .meta .fillv { min-width: 130px; font-size: 12px; }
+.certificate .legal { margin-top: 9px; font-size: 11px; letter-spacing: 1px; color: var(--muted); text-align: center; }
+.certificate .legal b { color: var(--purple); }
+
+/* ====================== OFFER LETTER (portrait A4 pages) ====================== */
+.offer-sheet {
+  position: relative; width: 210mm; height: 297mm; background: #ffffff; overflow: hidden;
+  display: flex; flex-direction: column; padding: 14mm 16mm 0;
+  font-family: 'EB Garamond', Georgia, 'Times New Roman', serif; color: var(--ink);
+}
+.offer-sheet::before {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 6px;
+  background: linear-gradient(180deg, var(--purple), var(--orange) 55%, var(--orange-deep));
+}
+.offer-sheet .wm { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.offer-sheet .wm span {
+  font-family: 'Cinzel', serif; font-size: 300px; font-weight: 700; letter-spacing: 6px;
+  color: rgba(58, 38, 109, 0.03); transform: rotate(-12deg); user-select: none;
+}
+.offer-sheet .letterhead { display: flex; align-items: flex-start; justify-content: space-between; position: relative; z-index: 2; }
+.offer-sheet .letterhead .brand img { height: 50px; width: auto; display: block; }
+.offer-sheet .letterhead .brand .sub {
+  font-family: 'Cormorant Garamond', serif; font-size: 10px; font-weight: 600; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--muted); margin-top: 6px;
+}
+.offer-sheet .letterhead .contact { text-align: right; font-size: 11px; line-height: 1.6; color: var(--muted); margin-top: 2px; }
+.offer-sheet .letterhead .contact b { color: var(--purple); }
+.offer-sheet .brand-rule {
+  height: 2.5px; margin: 9px 0 0;
+  background: linear-gradient(90deg, var(--purple) 0%, var(--purple) 55%, var(--orange) 55%, var(--orange) 100%);
+  position: relative; z-index: 2;
+}
+.offer-sheet .doc-title {
+  text-align: center; font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 800; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--purple); margin-top: 12px; position: relative; z-index: 2;
+}
+.offer-sheet .doc-subtitle {
+  text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--orange-deep); margin-top: 2px; position: relative; z-index: 2;
+}
+.offer-sheet .meta-row {
+  display: flex; justify-content: space-between; margin-top: 12px; font-size: 12px; color: var(--ink);
+  position: relative; z-index: 2;
+}
+.offer-sheet .to-block { margin-top: 10px; font-size: 12.5px; line-height: 1.5; position: relative; z-index: 2; }
+.offer-sheet .to-block b { color: var(--purple); }
+.offer-sheet .body { position: relative; z-index: 2; }
+.offer-sheet .body p { font-size: 12px; line-height: 1.55; color: var(--ink); margin-top: 9px; text-align: justify; }
+.offer-sheet .body strong { color: var(--purple); font-weight: 600; }
+.offer-sheet .section-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--purple); margin-top: 14px; padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--orange); position: relative; z-index: 2;
+}
+.offer-sheet .dtable { width: 100%; border-collapse: collapse; margin-top: 8px; position: relative; z-index: 2; }
+.offer-sheet .dtable td {
+  border: 1px solid rgba(58, 38, 109, 0.2); padding: 5px 10px; font-size: 11.5px; vertical-align: top;
+}
+.offer-sheet .dtable td.k { width: 38%; font-weight: 600; color: var(--purple); background: var(--cream); }
+.offer-sheet .dtable.center td.v { text-align: center; }
+.offer-sheet ol.rr, .offer-sheet ul.rr { margin: 8px 0 0 20px; padding: 0; position: relative; z-index: 2; }
+.offer-sheet ol.rr li, .offer-sheet ul.rr li {
+  font-size: 11.5px; line-height: 1.45; color: var(--ink); margin-top: 4px; padding-left: 3px;
+}
+.offer-sheet ol.rr li::marker, .offer-sheet ul.rr li::marker { color: var(--orange-deep); }
+.offer-sheet .closing { display: flex; align-items: flex-end; justify-content: space-between; margin-top: 22px; position: relative; z-index: 2; }
+.offer-sheet .closing .regards { font-size: 12.5px; color: var(--ink); }
+.offer-sheet .closing .sign-right { text-align: right; }
+.offer-sheet .closing .sig-img { height: 70px; width: auto; display: inline-block; margin-bottom: 1px; }
+.offer-sheet .closing .sig-cap {
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 12px; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--purple);
+}
+.offer-sheet .closing .sig-org { font-size: 11px; color: var(--muted); }
+.offer-sheet .acceptance {
+  margin-top: 16px; border: 1.2px solid rgba(58, 38, 109, 0.25); border-left: 4px solid var(--orange);
+  border-radius: 6px; background: var(--cream); padding: 10px 14px 12px; position: relative; z-index: 2;
+}
+.offer-sheet .acceptance .head {
+  font-family: 'Cormorant Garamond', serif; font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--purple);
+}
+.offer-sheet .acceptance p { font-size: 11.5px; line-height: 1.5; color: var(--ink); margin-top: 6px; }
+.offer-sheet .acceptance .sig-row { display: flex; gap: 40px; margin-top: 14px; font-size: 11.5px; color: var(--ink); }
+.offer-sheet .acceptance .ln { display: inline-block; min-width: 130px; border-bottom: 1.2px solid var(--purple); }
+.offer-sheet .footer-band {
+  margin: auto -16mm 0; padding: 8px 16mm; background: var(--purple); color: #efeaf7; font-size: 10px;
+  letter-spacing: 0.4px; text-align: center; position: relative; z-index: 2;
+}
+.offer-sheet .footer-band b { color: var(--orange-light); }
+.offer-sheet .footer-band .dot { color: var(--orange); margin: 0 6px; }
+.offer-sheet .page-num { position: absolute; bottom: 4mm; right: 16mm; font-size: 9px; color: var(--muted); z-index: 3; }

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>5XFUTURE — Internship Offer Letter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Playfair+Display:wght@600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --purple: #3A266D;       /* brand primary  */
+    --purple-deep: #2A1B52;
+    --purple-soft: #4A3488;
+    --orange: #F58220;       /* brand accent   */
+    --orange-deep: #D96E12;
+    --orange-light: #F9A35A;
+    --cream: #FBF8F2;
+    --ink: #2B2347;
+    --muted: #6E6688;
+    --placeholder: #C3BDD2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #eceaf2;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ===== Portrait A4 sheet ===== */
+  .sheet {
+    position: relative;
+    width: 210mm;
+    height: 297mm;
+    margin: 24px auto;
+    background: #ffffff;
+    box-shadow: 0 18px 60px rgba(58, 38, 109, 0.30);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 16mm 18mm 0;
+  }
+  /* thin accent edge down the left side */
+  .sheet::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg, var(--purple), var(--orange) 55%, var(--orange-deep));
+  }
+
+  /* faint watermark */
+  .watermark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .watermark span {
+    font-family: 'Cinzel', serif;
+    font-size: 320px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: rgba(58, 38, 109, 0.035);
+    transform: rotate(-12deg);
+    user-select: none;
+  }
+
+  /* ===== Letterhead ===== */
+  .letterhead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+  .letterhead .brand img {
+    height: 56px;
+    width: auto;
+    display: block;
+  }
+  .letterhead .brand .sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 7px;
+  }
+  .letterhead .contact {
+    text-align: right;
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .letterhead .contact b { color: var(--purple); }
+  .letterhead .contact .ph {
+    color: var(--placeholder);
+    border-bottom: 1px solid var(--placeholder);
+    display: inline-block;
+    min-width: 78px;
+  }
+
+  .brand-rule {
+    height: 2.5px;
+    margin: 10px 0 0;
+    background: linear-gradient(90deg, var(--purple) 0%, var(--purple) 55%, var(--orange) 55%, var(--orange) 100%);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===== Document title ===== */
+  .doc-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-top: 14px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===== Reference row ===== */
+  .ref-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    font-size: 13.5px;
+    color: var(--ink);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===== Recipient ===== */
+  .to-block {
+    margin-top: 14px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+  }
+  .to-block .lead { color: var(--ink); }
+
+  .subject {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--purple);
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+  }
+  .subject .lbl { color: var(--ink); font-weight: 600; }
+
+  .salutation {
+    margin-top: 14px;
+    font-size: 13.5px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===== Body ===== */
+  .body {
+    position: relative;
+    z-index: 2;
+  }
+  .body p {
+    font-size: 13.5px;
+    line-height: 1.62;
+    color: var(--ink);
+    margin-top: 11px;
+    text-align: justify;
+  }
+  .body strong { color: var(--purple); font-weight: 600; }
+
+  .terms-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--purple);
+    margin-top: 12px;
+  }
+  .terms {
+    margin: 6px 0 0 22px;
+    padding: 0;
+  }
+  .terms li {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-top: 4px;
+    padding-left: 4px;
+  }
+  .terms li::marker { color: var(--orange-deep); }
+
+  /* Fillable blanks */
+  .fill {
+    display: inline-block;
+    min-width: 150px;
+    border-bottom: 1.3px solid var(--purple);
+    margin: 0 4px;
+    text-align: center;
+    color: var(--placeholder);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.1;
+  }
+  .fill.lg { min-width: 230px; }
+  .fill.sm { min-width: 110px; }
+  .fill.xs { min-width: 90px; }
+
+  /* ===== Signature + seal ===== */
+  .closing {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+  }
+  .sign-block {
+    font-size: 13.5px;
+  }
+  .sign-block .regards { color: var(--ink); margin-bottom: 2px; }
+  .sign-right { text-align: right; }
+  .sign-right .sig-img {
+    height: 84px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: 1px;
+  }
+  .sign-right .sig-cap {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--purple);
+  }
+  .sign-block .ink-line {
+    width: 200px;
+    height: 30px;
+    border-bottom: 1.4px solid var(--purple);
+    margin: 4px 0 6px;
+  }
+  .sign-block .role {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--purple);
+  }
+  .sign-block .org {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+  .seal-box {
+    width: 116px;
+    height: 116px;
+    border: 1.6px dashed var(--orange-deep);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--placeholder);
+    gap: 3px;
+  }
+  .seal-box .s1 {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--orange-deep);
+    font-weight: 600;
+  }
+  .seal-box .s2 {
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+  }
+
+  /* ===== Acceptance ===== */
+  .acceptance {
+    margin-top: 18px;
+    border: 1.2px solid rgba(58, 38, 109, 0.25);
+    border-left: 4px solid var(--orange);
+    border-radius: 6px;
+    background: var(--cream);
+    padding: 11px 16px 14px;
+    position: relative;
+    z-index: 2;
+  }
+  .acceptance .head {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--purple);
+  }
+  .acceptance p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-top: 6px;
+  }
+  .acceptance .sig-row {
+    display: flex;
+    gap: 40px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  /* ===== Footer band ===== */
+  .footer-band {
+    margin: auto -18mm 0;
+    padding: 9px 18mm;
+    background: var(--purple);
+    color: #efeaf7;
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-band b { color: var(--orange-light); }
+  .footer-band .dot { color: var(--orange); margin: 0 7px; }
+
+  /* ===== Print ===== */
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    html, body { background: #fff; }
+    .sheet { margin: 0; box-shadow: none; page-break-after: always; }
+    .toolbar { display: none !important; }
+  }
+
+  /* Screen helper toolbar */
+  .toolbar {
+    max-width: 210mm;
+    margin: 20px auto 0;
+    text-align: center;
+  }
+  .toolbar button {
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--purple);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .toolbar button:hover { background: var(--purple-soft); }
+  .toolbar p { margin-top: 8px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <button onclick="window.print()">🖨  Print / Save as PDF (A4 Portrait)</button>
+    <p>Fill the underlined blanks (name, course, dates), then print or save as PDF.</p>
+  </div>
+
+  <div class="sheet">
+    <div class="watermark"><span>5X</span></div>
+
+    <!-- Letterhead -->
+    <div class="letterhead">
+      <div class="brand">
+        <img src="logo.png" alt="5XFUTURE — Learn Today. Lead Tomorrow." />
+        <div class="sub">Software Training Institute &nbsp;•&nbsp; Kakinada</div>
+      </div>
+      <div class="contact">
+        🌐 &nbsp;<b>5xfuture.in</b><br/>
+        ✉ &nbsp;<b>contact@5xfuture.in</b><br/>
+        ☎ &nbsp;<b>+91 96401 31555</b>
+      </div>
+    </div>
+    <div class="brand-rule"></div>
+
+    <!-- Title -->
+    <div class="doc-title">Internship Offer Letter</div>
+
+    <!-- Reference row -->
+    <div class="ref-row">
+      <div>Ref / Letter No.: <span class="fill sm">&nbsp;</span></div>
+      <div>Date: <span class="fill sm">&nbsp;</span></div>
+    </div>
+
+    <!-- Recipient -->
+    <div class="to-block">
+      <div class="lead">To,</div>
+      <div><span class="fill lg">&nbsp;</span> &nbsp;<span style="color:var(--muted);font-size:11px;">(Name of the Student)</span></div>
+      <div style="margin-top:6px;"><span class="fill lg">&nbsp;</span> &nbsp;<span style="color:var(--muted);font-size:11px;">(City / Place — optional)</span></div>
+    </div>
+
+    <!-- Subject -->
+    <div class="subject"><span class="lbl">Subject:</span> Offer of Internship in <span class="fill">&nbsp;</span></div>
+
+    <!-- Salutation -->
+    <div class="salutation">Dear <span class="fill sm">&nbsp;</span>,</div>
+
+    <!-- Body -->
+    <div class="body">
+      <p>We are pleased to offer you an internship at <strong>5XFUTURE Software Training Institute, Kakinada</strong> — a brand of <strong>Mahasana IT Solutions Private Limited</strong> — in the domain of <span class="fill">&nbsp;</span>. The internship will be conducted in <strong>online / offline</strong> mode.</p>
+
+      <p>Your internship will commence on <span class="fill sm">&nbsp;</span> and conclude on <span class="fill sm">&nbsp;</span>, spanning a period of <span class="fill xs">&nbsp;</span>. During this time you will work on <strong>real‑time projects</strong> and develop <strong>industry‑relevant skills</strong> under the guidance of our mentors and trainers.</p>
+
+      <p>This is a skill‑development training internship offered as part of our learning programme. It is <strong>unpaid</strong>, and <strong>no stipend is payable</strong> for the duration of the internship.</p>
+
+      <div class="terms-title">Terms of the Internship:</div>
+      <ul class="terms">
+        <li>Attend all scheduled online sessions and submit the assigned tasks and projects on time.</li>
+        <li>Maintain professionalism, punctuality, discipline, and confidentiality of all training and project material.</li>
+        <li>On successful completion, you will be awarded a <strong>Certificate of Internship</strong> by 5XFUTURE.</li>
+        <li>The institute reserves the right to discontinue the internship in case of misconduct, irregular attendance, or non‑participation.</li>
+      </ul>
+
+      <p>We are confident that this internship will be a valuable step in your career journey. To confirm your participation, kindly sign and return the acceptance section below.</p>
+    </div>
+
+    <!-- Closing: greeting (left) + authorised signatory with signature (right) -->
+    <div class="closing">
+      <div class="sign-block">
+        <div class="regards">Warm regards,</div>
+      </div>
+      <div class="sign-right">
+        <img class="sig-img" src="signature.png" alt="For Mahasana IT Solutions Private Limited — Director" />
+        <div class="sig-cap">Authorised Signatory</div>
+      </div>
+    </div>
+
+    <!-- Acceptance -->
+    <div class="acceptance">
+      <div class="head">Acceptance by Intern</div>
+      <p>I, <span class="fill">&nbsp;</span>, hereby accept the internship offer and agree to the terms and conditions stated above.</p>
+      <div class="sig-row">
+        <div>Student Signature: <span class="fill sm">&nbsp;</span></div>
+        <div>Date: <span class="fill xs">&nbsp;</span></div>
+      </div>
+    </div>
+
+    <!-- Footer band -->
+    <div class="footer-band">
+      5XFUTURE is a brand of <b>Mahasana IT Solutions Private Limited</b>
+      <span class="dot">•</span> CIN: U62010AP2023PTC113188
+      <span class="dot">•</span> 5xfuture.in
+    </div>
+
+  </div>
+
+</body>
+</html>
